@@ -18,17 +18,20 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close ng-click="login()">
+        <ion-item menu-close ng-show="loggedIn">
+          {{ currentUser.email }}
+        </ion-item>
+        <ion-item menu-close ng-click="login()" ng-show="!loggedIn">
           Login
+        </ion-item>
+        <ion-item menu-close ng-click="signup()" ng-show="!loggedIn">
+          Sign up
+        </ion-item>
+        <ion-item menu-close ng-click="doLogout()" ng-show="loggedIn">
+          Logout
         </ion-item>
         <ion-item menu-close href="#/app/movies">
           Search Movies
-        </ion-item>
-        <ion-item menu-close href="#/app/browse">
-          Browse
-        </ion-item>
-        <ion-item menu-close href="#/app/playlists">
-          Playlists
         </ion-item>
       </ion-list>
     </ion-content>
