@@ -55,16 +55,29 @@ angular.module('starter.controllers', [])
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
-.controller('SearchCtrl', function($scope, $stateParams, $http) {
+.controller('MovieShowCtrl', function($scope, $stateParams, $http) {
+  $scope.movieForm = {};
+  $scope.ready = false;
+
+  $http.get('http://www.omdbapi.com/?i=' + $stateParams.id).success(function(response){
+    console.log(response);
+    $scope.movie = response;
+    $scope.ready = true;
+  });
+})
+
+.controller('MoviesSearchCtrl', function($scope, $stateParams, $http) {
   $scope.movieForm = {};
   $scope.ready = false;
 
   $scope.movieForm.searchMovie = function(){
-    $http.get('http://www.omdbapi.com/?t=' + $scope.movieForm.movieName).success(function(response){
-      console.log(response);
-      $scope.movie = response;
+    $scope.searching = true;
+
+    $http.get('http://www.omdbapi.com/?s=' + $scope.movieForm.movieName).success(function(response){
+      console.log(response.Search);
+      $scope.movies = response.Search;
+      $scope.searching = false;
       $scope.ready = true;
     });
   };
 });
-

@@ -1,0 +1,58 @@
+<ion-view view-title="{{ movie.Title }}">
+  <ion-content>
+
+    <ion-spinner icon="spiral" ng-show="!ready" class="center"></ion-spinner>
+
+    <div class="list card" ng-show="ready">
+      <div class="item">
+        <h2>{{ movie.Title }}</h2>
+        <p>{{ movie.Year }}</p>
+      </div>
+
+      <div class="item item-image">
+        <img ng-src="{{ movie.Poster }}">
+      </div>
+
+      <div class="item item-body">
+        <ul class="list">
+          <li class="item">
+            Released: {{ movie.Released }}
+          </li>
+          <li class="item">
+            Runtime: {{ movie.Runtime }}
+          </li>
+          <li class="item">
+            Genre: {{ movie.Genre }}
+          </li>
+          <li class="item">
+            Director: {{ movie.Director }}
+          </li>
+          <li class="item">
+            Actor: {{ movie.Actor }}
+          </li>
+          <li class="item">
+            Plot: {{ movie.Plot }}
+          </li>
+          <li class="item">
+            Language: {{ movie.Language }}
+          </li>
+          <li class="item">
+            Country: {{ movie.Country }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="item tabs tabs-secondary tabs-icon-left">
+        <a class="tab-item" href="#">
+          <i class="icon ion-thumbsup"></i>
+          Like
+        </a>
+        <a class="tab-item" href="#">
+          <i class="icon ion-share"></i>
+          Share
+        </a>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>
