@@ -83,11 +83,28 @@ angular.module('starter.controllers', [])
   $scope.movieForm = {};
   $scope.ready = false;
 
-  $http.get('http://www.omdbapi.com/?i=' + $stateParams.id).success(function(response){
+  $http.get('http://www.omdbapi.com?i=' + $stateParams.id).success(function(response){
     console.log(response);
     $scope.movie = response;
     $scope.ready = true;
   });
+
+  if ($scope.loggedIn) {
+    $http.get('http://localhost:3000/users/' + $scope.currentUser.id + '/likes?omdb_id=' + $stateParams.id).success(function(resp){
+      if (resp.length > 0 ){
+        $scope.liked = true;
+      }
+    });
+  }
+
+  $scope.likeMovie = function(){
+    if ($scope.loggedIn) {
+      $http.post('http://localhost:3000/users/' + $scope.currentUser.id + '/likes', { like: { omdb_id: $stateParams.id} });
+      $scope.liked = true;
+    } else {
+      $scope.login();
+    }
+  };
 })
 
 .controller('MoviesSearchCtrl', function($scope, $stateParams, $http) {
@@ -97,11 +114,13 @@ angular.module('starter.controllers', [])
   $scope.movieForm.searchMovie = function(){
     $scope.searching = true;
 
-    $http.get('http://www.omdbapi.com/?s=' + $scope.movieForm.movieName).success(function(response){
+    $http.get('http://www.omdbapi.com?s=' + $scope.movieForm.movieName).success(function(response){
       console.log(response.Search);
       $scope.movies = response.Search;
       $scope.searching = false;
       $scope.ready = true;
+    }).error(function(resp){
+      console.log(resp);
     });
   };
 });

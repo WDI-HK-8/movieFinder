@@ -43,8 +43,8 @@
       </div>
 
       <div class="item tabs tabs-secondary tabs-icon-left">
-        <a class="tab-item" href="#">
-          <i class="icon ion-thumbsup"></i>
+        <a class="tab-item" ng-click="likeMovie()">
+          <i class="icon ion-thumbsup" ng-class="liked ? 'liked' : ''"></i>
           Like
         </a>
         <a class="tab-item" href="#">
