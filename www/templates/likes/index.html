@@ -1,0 +1,9 @@
+<ion-view view-title="My Likes">
+  <ion-content>
+    <div class="list">
+      <a class="item" ui-sref="app.singleMovie({ id: like.omdb_id })" ng-repeat="like in likes">
+        <h2>{{ like.title }}</h2>
+      </a>
+    </div>
+  </ion-content>
+</ion-view>

@@ -36,7 +36,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ng-token-auth'])
     url: '/movies',
     views: {
       'menuContent': {
-        templateUrl: 'templates/movies.html',
+        templateUrl: 'templates/movies/index.html',
         controller: 'MoviesSearchCtrl'
       }
     }
@@ -46,8 +46,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ng-token-auth'])
     url: '/movies/:id',
     views: {
       'menuContent': {
-        templateUrl: 'templates/movies-show.html',
+        templateUrl: 'templates/movies/show.html',
         controller: 'MovieShowCtrl'
+      }
+    }
+  })
+
+  .state('app.likes', {
+    url: '/likes',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/likes/index.html',
+        controller: 'LikesIndexCtrl'
       }
     }
   });
@@ -59,5 +69,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ng-token-auth'])
     // By default, you only need to configure apiUrl
     // Note that if you put a '/' at the end of the link, there will be errors when calling the api
     apiUrl: 'http://localhost:3000'
+    // apiUrl: 'https://movie-finder-api.herokuapp.com'
   })
 });

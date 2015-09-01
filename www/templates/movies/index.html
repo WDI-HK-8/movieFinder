@@ -12,9 +12,7 @@
       </div>
     </div>
 
-    <ion-spinner icon="spiral" ng-show="searching" class="center" style="margin: 0 auto;"></ion-spinner>
-
-    <div class="list" ng-show="ready">
+    <div class="list">
       <a class="item" ui-sref="app.singleMovie({ id: movie.imdbID })" ng-repeat="movie in movies">
         <h2>{{ movie.Title }}</h2>
         <p>{{ movie.Year }}</p>

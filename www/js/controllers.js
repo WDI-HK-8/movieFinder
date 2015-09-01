@@ -1,12 +1,17 @@
+var URL = "http://localhost:3000";
+// var URL = "https://movie-finder-api.herokuapp.com";
+
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $auth, $ionicPopup, $state) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $auth, $ionicPopup, $state, $window) {
 
   var validateUser = function(){
-    $scope.currentUser = JSON.parse(window.localStorage['current-user'] || '{}');
+    $scope.currentUser = JSON.parse($window.localStorage.getItem('current-user') || '{}');
     $scope.loggedIn = $scope.currentUser ? true : false
     console.log('current user:', $scope.currentUser);
   };
+
+  validateUser();
 
   // Form data for the login modal
   $scope.loginData = {};
@@ -30,7 +35,7 @@ angular.module('starter.controllers', [])
 
     $auth.submitLogin($scope.loginData)
       .then(function(resp) {
-        window.localStorage['current-user'] = JSON.stringify(resp);
+        $window.localStorage.setItem('current-user', JSON.stringify(resp));
         validateUser();
         $scope.closeLogin();
       })
@@ -45,7 +50,7 @@ angular.module('starter.controllers', [])
   $scope.doLogout = function() {
     console.log('Doing logout');
 
-    window.localStorage['current-user'] = null;
+    $window.localStorage.setItem('current-user', null);
     validateUser();
   };
 
@@ -81,17 +86,15 @@ angular.module('starter.controllers', [])
 
 .controller('MovieShowCtrl', function($scope, $stateParams, $http) {
   $scope.movieForm = {};
-  $scope.ready = false;
 
-  $http.get('http://localhost:3000/movies/' + $stateParams.id).success(function(response){
+  $http.get(URL + '/movies/' + $stateParams.id).success(function(response){
     console.log(response);
     $scope.movie = response;
-    $scope.ready = true;
   });
 
   if ($scope.loggedIn) {
-    $http.get('http://localhost:3000/users/' + $scope.currentUser.id + '/likes?omdb_id=' + $stateParams.id).success(function(resp){
-      if (resp.length > 0 ){
+    $http.get(URL + '/users/' + $scope.currentUser.id + '/likes?omdb_id=' + $stateParams.id).success(function(response){
+      if (response.length > 0 ){
         $scope.liked = true;
       }
     });
@@ -99,7 +102,7 @@ angular.module('starter.controllers', [])
 
   $scope.likeMovie = function(){
     if ($scope.loggedIn) {
-      $http.post('http://localhost:3000/users/' + $scope.currentUser.id + '/likes', { like: { omdb_id: $stateParams.id} });
+      $http.post(URL + '/users/' + $scope.currentUser.id + '/likes', { like: { omdb_id: $stateParams.id, title: $scope.movie.Title} });
       $scope.liked = true;
     } else {
       $scope.login();
@@ -109,18 +112,24 @@ angular.module('starter.controllers', [])
 
 .controller('MoviesSearchCtrl', function($scope, $stateParams, $http) {
   $scope.movieForm = {};
-  $scope.ready = false;
 
   $scope.movieForm.searchMovie = function(){
-    $scope.searching = true;
-
-    $http.get('http://localhost:3000/movies?query=' + $scope.movieForm.movieName).success(function(response){
+    $http.get(URL + '/movies?query=' + $scope.movieForm.movieName).success(function(response){
       console.log(response.Search);
       $scope.movies = response.Search;
-      $scope.searching = false;
-      $scope.ready = true;
-    }).error(function(resp){
-      console.log(resp);
+    }).error(function(response){
+      console.log(response);
     });
   };
+})
+
+.controller('LikesIndexCtrl', function($scope, $stateParams, $http) {
+
+  console.log("here")
+  $http.get(URL + '/users/' + $scope.currentUser.id + '/likes').success(function(response){;
+    console.log(response);
+    $scope.likes = response;
+  }).error(function(response){
+    console.log(response);
+  });
 });
