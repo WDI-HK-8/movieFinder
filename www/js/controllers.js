@@ -1,5 +1,5 @@
-var URL = "http://localhost:3000";
-// var URL = "https://movie-finder-api.herokuapp.com";
+// var URL = "http://localhost:3000";
+var URL = "https://movie-finder-api.herokuapp.com";
 
 angular.module('starter.controllers', [])
 
@@ -76,10 +76,17 @@ angular.module('starter.controllers', [])
 
     $auth.submitRegistration($scope.signupData).
       then(function(resp) {
-       console.log(resp);
+        $ionicPopup.alert({
+          title: 'Success!',
+          template: 'You are now logged in!'
+        });
+
+        $scope.closeSignup();
       }).
       catch(function(resp) {
-       console.log(resp);
+        $ionicPopup.alert({
+          message: resp
+        });
       });
   };
 })
