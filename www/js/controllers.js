@@ -78,7 +78,7 @@ angular.module('starter.controllers', [])
       then(function(resp) {
         $ionicPopup.alert({
           title: 'Success!',
-          template: 'You are now logged in!'
+          template: 'You are now signed up!'
         });
 
         $scope.closeSignup();
@@ -131,8 +131,6 @@ angular.module('starter.controllers', [])
 })
 
 .controller('LikesIndexCtrl', function($scope, $stateParams, $http) {
-
-  console.log("here")
   $http.get(URL + '/users/' + $scope.currentUser.id + '/likes').success(function(response){;
     console.log(response);
     $scope.likes = response;

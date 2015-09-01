@@ -53,6 +53,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ng-token-auth'])
   })
 
   .state('app.likes', {
+    cache: false,
     url: '/likes',
     views: {
       'menuContent': {
