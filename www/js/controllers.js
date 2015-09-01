@@ -83,7 +83,7 @@ angular.module('starter.controllers', [])
   $scope.movieForm = {};
   $scope.ready = false;
 
-  $http.get('http://www.omdbapi.com?i=' + $stateParams.id).success(function(response){
+  $http.get('http://localhost:3000/movies/' + $stateParams.id).success(function(response){
     console.log(response);
     $scope.movie = response;
     $scope.ready = true;
@@ -114,7 +114,7 @@ angular.module('starter.controllers', [])
   $scope.movieForm.searchMovie = function(){
     $scope.searching = true;
 
-    $http.get('http://www.omdbapi.com?s=' + $scope.movieForm.movieName).success(function(response){
+    $http.get('http://localhost:3000/movies?query=' + $scope.movieForm.movieName).success(function(response){
       console.log(response.Search);
       $scope.movies = response.Search;
       $scope.searching = false;
