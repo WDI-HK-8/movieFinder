@@ -470,7 +470,7 @@ angular.module('ng-token-auth', ['ipCookie'])
                 params = if Object.keys(search).length==0 then location_parse else search
                 
                 # auth_token matches what is sent with postMessage, but supporting token for
-                # backwards compatability
+                # backwards compatibility
                 token = params.auth_token || params.token
 
                 if token != undefined
